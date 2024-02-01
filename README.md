@@ -1,8 +1,52 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
+First, install the project:
 
-First, run the development server:
+```bash
+npx create-next-app@latest
+
+What is your project named? next-todolist
+Would you like to use TypeScript? No / Yes #yes
+Would you like to use ESLint? No / Yes # no
+Would you like to use Tailwind CSS? No / Yes #yes
+Would you like to use `src/` directory? No / Yes #yes
+Would you like to use App Router? (recommended) No / Yes # yes
+Would you like to customize the default import alias (@/*)? No / Yes # yes
+What import alias would you like configured? @/*
+
+```
+Second, install prisma and dayjs:
+
+```bash
+npm i prisma dayjs -D
+npx prisma init --datasource-provider sqlite # 这里可以使用多种数据库类型
+```
+我们使用sqlite作为数据库存储，它比较轻量，也实现了常见的关系型数据库功能，不需要安装额外的程序。
+
+初始化后我们可以看到在项目根目录下多了prisma文件夹，文件夹下有schema.prisma文件。打开此文件定义我们的表结构：
+
+```bash
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Todo {
+  id Int @id @default(autoincrement()) // 主键 自增id
+  name String // 任务名
+  time String // 执行时间
+  created DateTime @default(now()) // 记录默认创建时间
+}
+```
+
+定义好todo表之后，执行[`npx prisma migrate dev --name init`]命令，他将在prisma文件夹下生成[`dev.db`]文件，就是sqlite的数据存储文件，同时将表结构写入数据库。并自动安装了[`@prisma/client`]，这个库用来操作数据库。
+
+At last, run the development server:
 
 ```bash
 npm run dev
