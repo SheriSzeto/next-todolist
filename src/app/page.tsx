@@ -15,7 +15,7 @@ export default async function Home() {
 
 
   return (
-    <div className="p-10 mx-auto w-[600px]">
+    <div className="p-10 mx-auto w-[700px]">
       <div className='mb-4'>
         <Form />
       </div>

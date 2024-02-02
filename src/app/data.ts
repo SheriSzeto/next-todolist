@@ -15,3 +15,12 @@ export const deleteTodo = async (id: number) => {
     }
   })
 }
+
+export const editTodo = async (data: {id: number, name: string, time: string}) => {
+  await prisma.todo.update({
+    where: {
+      id: data.id
+    },
+    data: data
+  })
+}
