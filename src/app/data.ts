@@ -7,3 +7,11 @@ export const addTodo = async (data: {name: string, time: string}) => {
     data: data
   })
 }
+
+export const deleteTodo = async (id: number) => {
+  await prisma.todo.delete({
+    where: {
+      id
+    }
+  })
+}
